@@ -1,0 +1,38 @@
+{
+  "name": "four-in-a-row",
+  "version": "1.0.0",
+  "description": "Four-In-A Row game logic library. No need to write the logic for the game yourself",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colinkiama/four-in-a-row-js"
+  },
+  "keywords": [
+    "four-in-a-row",
+    "four",
+    "in",
+    "a",
+    "row",
+    "connect",
+    "four",
+    "connect-four",
+    "connect",
+    "4",
+    "connect-4",
+    "library",
+    "logic",
+    "game",
+    "board",
+    "simulation",
+    "simulate",
+    "yellow",
+    "red",
+    "token",
+    "tokens"
+  ],
+  "author": "Colin Kiama <colinkiama@gmail.com> (https://colinkiama.com)",
+  "license": "MIT"
+}
