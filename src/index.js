@@ -1,4 +1,4 @@
-import Game from "./game.js";
-import * as Constants from "./constants.js.";
+export * from "./constants.js"
+export { default } from "./game.js";
 
-export { Game, Constants };
+

@@ -1,4 +1,10 @@
-import * as Constants from "./constants.js";
+import {
+    GameStatus,
+    MoveStatus,
+    PlayerColor,
+    BoardDimensions,
+    BoardToken
+} from "./constants.js";
 
 export default class Game {
     startingColor;
@@ -11,22 +17,22 @@ export default class Game {
     }
 
     static createBoard() {
-        let board = new Array(Constants.BoardDimensions.ROWS);
+        let board = new Array(BoardDimensions.ROWS);
 
-        for (let i = 0; i < Constants.BoardDimensions.ROWS; i++) {
-            board[i] = new Uint8Array(Constants.BoardDimensions.COLUMNS);
-            board[i].fill(Constants.BoardToken.NONE);
+        for (let i = 0; i < BoardDimensions.ROWS; i++) {
+            board[i] = new Uint8Array(BoardDimensions.COLUMNS);
+            board[i].fill(BoardToken.NONE);
         }
 
         return board;
     }
 
     static deepBoardCopy(oldBoard) {
-        let newBoard = new Array(Constants.BoardDimensions.ROWS);
+        let newBoard = new Array(BoardDimensions.ROWS);
 
-        for (let rowIndex = 0; rowIndex < Constants.BoardDimensions.ROWS; rowIndex++) {
-            newBoard[rowIndex] = new Uint8Array(Constants.BoardDimensions.COLUMNS);
-            for (let columnIndex = 0; columnIndex < Constants.BoardDimensions.COLUMNS; columnIndex++) {
+        for (let rowIndex = 0; rowIndex < BoardDimensions.ROWS; rowIndex++) {
+            newBoard[rowIndex] = new Uint8Array(BoardDimensions.COLUMNS);
+            for (let columnIndex = 0; columnIndex < BoardDimensions.COLUMNS; columnIndex++) {
                 newBoard[rowIndex][columnIndex] = oldBoard[rowIndex][columnIndex];
             }
         }
@@ -36,12 +42,12 @@ export default class Game {
 
     static playerColorToBoardToken(playerColor) {
         switch (playerColor) {
-            case Constants.PlayerColor.YELLOW:
-                return Constants.BoardToken.YELLOW;
-            case Constants.PlayerColor.RED:
-                return Constants.BoardToken.RED;
+            case PlayerColor.YELLOW:
+                return BoardToken.YELLOW;
+            case PlayerColor.RED:
+                return BoardToken.RED;
             default:
-                return Constants.BoardToken.NONE;
+                return BoardToken.NONE;
         }
     }
 
@@ -68,10 +74,10 @@ export default class Game {
         };
 
         let count = 0;
-        let tokenToCheck = Constants.BoardToken.NONE;
+        let tokenToCheck = BoardToken.NONE;
         let winLine = [];
 
-        for (let i = 0; i < Constants.BoardDimensions.WIN_LINE_LENGTH; i++) {
+        for (let i = 0; i < BoardDimensions.WIN_LINE_LENGTH; i++) {
             let row = config.startRowIndex + config.rowCountStep * i;
             let column = config.startColumnIndex + config.columnCountStep * i;
 
@@ -80,11 +86,11 @@ export default class Game {
             }
 
             let currentToken = board[row][column];
-            if (currentToken === Constants.BoardToken.NONE) {
+            if (currentToken === BoardToken.NONE) {
                 break;
             }
 
-            if (tokenToCheck === Constants.BoardToken.NONE) {
+            if (tokenToCheck === BoardToken.NONE) {
                 tokenToCheck = currentToken;
             }
 
@@ -95,7 +101,7 @@ export default class Game {
             winLine.push({ row: row, column: column });
         }
 
-        if (count === Constants.BoardDimensions.WIN_LINE_LENGTH) {
+        if (count === BoardDimensions.WIN_LINE_LENGTH) {
             return {
                 winLine: winLine,
                 winner: Game.boardTokenToPlayerColor(tokenToCheck),
@@ -109,19 +115,19 @@ export default class Game {
 
     static checkIfOutOfBounds(row, column) {
         return row < 0
-            || row > Constants.BoardDimensions.ROWS
+            || row > BoardDimensions.ROWS
             || column < 0
-            || column > Constants.BoardDimensions.COLUMNS;
+            || column > BoardDimensions.COLUMNS;
     }
 
     static boardTokenToPlayerColor(boardToken) {
         switch (boardToken) {
-            case Constants.BoardToken.YELLOW:
-                return Constants.PlayerColor.YELLOW;
-            case Constants.BoardToken.RED:
-                return Constants.PlayerColor.RED;
+            case BoardToken.YELLOW:
+                return PlayerColor.YELLOW;
+            case BoardToken.RED:
+                return PlayerColor.RED;
             default:
-                return Constants.PlayerColor.NONE;
+                return PlayerColor.NONE;
         }
     }
 
@@ -129,8 +135,8 @@ export default class Game {
     // e.g: winLine = [{row: 0, column: 0}, {row: 0, column: 1}, {row: 0, column : 2}, {row: 0, column: 3}]
     static checkForWin(board) {
         // Starts from bottom left of the board and ends on top right of board
-        for (let columnIndex = 0; columnIndex < Constants.BoardDimensions.COLUMNS; columnIndex++) {
-            for (let rowIndex = Constants.BoardDimensions.ROWS - 1; rowIndex > -1; rowIndex--) {
+        for (let columnIndex = 0; columnIndex < BoardDimensions.COLUMNS; columnIndex++) {
+            for (let rowIndex = BoardDimensions.ROWS - 1; rowIndex > -1; rowIndex--) {
                 // Check for vertical win
                 let verticalWinCheckResult = Game.tryFindWinLine(board, {
                     startRowIndex: rowIndex,
@@ -178,7 +184,7 @@ export default class Game {
 
         return {
             winLine: [],
-            winner: Constants.PlayerColor.NONE
+            winner: PlayerColor.NONE
         };
     }
 
@@ -187,7 +193,7 @@ export default class Game {
             let boardColumn = board[j];
             for (let i = 0; i < boardColumn.length; i++) {
                 let boardPosition = boardColumn[i];
-                if (boardPosition === Constants.BoardToken.NONE) {
+                if (boardPosition === BoardToken.NONE) {
                     return false;
                 }
             }
@@ -197,19 +203,19 @@ export default class Game {
     }
 
     reset() {
-        this.startingColor = Constants.PlayerColor.YELLOW;
+        this.startingColor = PlayerColor.YELLOW;
         this.currentTurn = this.startingColor;
-        this.status = Constants.GameStatus.START;
+        this.status = GameStatus.START;
         this.currentBoard = Game.createBoard();
     }
 
     playMove(columnIndex) {
         switch (this.status) {
-            case Constants.GameStatus.START:
-                this.status = Constants.GameStatus.IN_PROGRESS;
+            case GameStatus.START:
+                this.status = GameStatus.IN_PROGRESS;
                 break;
-            case Constants.GameStatus.DRAW:
-            case Constants.GameStatus.WIN:
+            case GameStatus.DRAW:
+            case GameStatus.WIN:
                 // The game is over at this point so
                 // re-evaluate the latest board, returning the same game status
                 // and board details.
@@ -221,10 +227,10 @@ export default class Game {
         let moveResult = this.performMove(columnIndex);
 
         // Only change current turn while the game is still in progress.
-        if (moveResult.status.value === Constants.MoveStatus.SUCCESS) {
-            this.currentTurn = this.currentTurn === Constants.PlayerColor.YELLOW
-                ? Constants.PlayerColor.RED
-                : Constants.PlayerColor.YELLOW;
+        if (moveResult.status.value === MoveStatus.SUCCESS) {
+            this.currentTurn = this.currentTurn === PlayerColor.YELLOW
+                ? PlayerColor.RED
+                : PlayerColor.YELLOW;
         }
 
         return moveResult;
@@ -235,13 +241,13 @@ export default class Game {
 
         let moveAttemptResult = this.tryPerformMove(columnIndex, nextBoard);
 
-        if (moveAttemptResult.status === Constants.MoveStatus.INVALID) {
+        if (moveAttemptResult.status === MoveStatus.INVALID) {
             return {
                 board: nextBoard,
-                winner: Constants.PlayerColor.NONE,
+                winner: PlayerColor.NONE,
                 status: {
                     message: "Returned column is filled",
-                    value: Constants.MoveStatus.INVALID
+                    value: MoveStatus.INVALID
                 },
                 winLine: []
             }
@@ -259,7 +265,7 @@ export default class Game {
             let boardRow = nextBoard[i];
             let boardPosition = boardRow[columnIndex];
 
-            if (boardPosition !== Constants.BoardToken.NONE) {
+            if (boardPosition !== BoardToken.NONE) {
                 continue;
             }
 
@@ -270,12 +276,12 @@ export default class Game {
 
         if (!isMoveValid) {
             return {
-                status: Constants.MoveStatus.INVALID,
+                status: MoveStatus.INVALID,
             };
         }
 
         return {
-            status: Constants.MoveStatus.SUCCESS,
+            status: MoveStatus.SUCCESS,
             board: nextBoard
         };
     }
@@ -283,13 +289,13 @@ export default class Game {
     evaluateGame(board) {
         let winCheckResult = Game.checkForWin(board);
 
-        if (winCheckResult.winner !== Constants.PlayerColor.NONE) {
-            this.status = Constants.GameStatus.WIN;
+        if (winCheckResult.winner !== PlayerColor.NONE) {
+            this.status = GameStatus.WIN;
             return {
                 board: board,
                 winner: winCheckResult.winner,
                 status: {
-                    value: Constants.MoveStatus.WIN,
+                    value: MoveStatus.WIN,
                 },
                 winLine: winCheckResult.winLine,
             };
@@ -298,13 +304,13 @@ export default class Game {
         // If board is full right now, we can assume the game to be a draw
         // since there weren't any winning lines detected.
         if (Game.checkForFilledBoard(board)) {
-            this.status = Constants.GameStatus.DRAW;
+            this.status = GameStatus.DRAW;
 
             return {
                 board: board,
-                winner: Constants.PlayerColor.NONE,
+                winner: PlayerColor.NONE,
                 status: {
-                    value: Constants.MoveStatus.DRAW,
+                    value: MoveStatus.DRAW,
                 },
                 winLine: [],
             };
@@ -314,9 +320,9 @@ export default class Game {
         // continue on.
         return {
             board: board,
-            winner: Constants.PlayerColor.NONE,
+            winner: PlayerColor.NONE,
             status: {
-                value: Constants.MoveStatus.SUCCESS,
+                value: MoveStatus.SUCCESS,
             },
             winLine: [],
         };
