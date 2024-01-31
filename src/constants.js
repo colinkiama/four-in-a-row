@@ -52,7 +52,7 @@ export const BoardDimensions = {
 /**
  * Represents Board token on board
  * @readonly
- * @enum
+ * @enum {number}
  */
 export const BoardToken = {
     NONE: 0,

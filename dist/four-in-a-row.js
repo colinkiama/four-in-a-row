@@ -1,10 +1,64 @@
-import {
-    GameStatus,
-    MoveStatus,
-    PlayerColor,
-    BoardDimensions,
-    BoardToken
-} from "./constants.js";
+/**
+ * Constants and Variables used in Four-In-A-Row Game
+ * @module constants
+ */
+
+/**
+ * Represents the overall state of the game
+ * @readonly
+ * @enum {string}
+ */
+const GameStatus = {
+    IN_PROGRESS: "in-progress",
+    START: "start",
+    WIN: "win",
+    DRAW: "draw",
+};
+
+/**
+ * Represents the result of a move
+ * @readonly
+ * @enum {string}
+ */
+const MoveStatus = {
+    INVALID: "invalid",
+    WIN: "win",
+    SUCCESS: "success",
+    DRAW: "draw",
+};
+
+/**
+ * Represents the color of a player
+ * @readonly
+ * @enum {string}
+ */
+const PlayerColor = {
+    NONE: "none",
+    YELLOW: "yellow",
+    RED: "red",
+};
+
+/**
+ * Contains dimensions of the game board
+ * @type {{ROWS: number, COLUMNS: number, WIN_LINE_LENGTH: number}} BoardDimensions
+ * @readonly
+ */
+const BoardDimensions = {
+    ROWS: 6,
+    COLUMNS: 7,
+    WIN_LINE_LENGTH: 4,
+};
+
+/**
+ * Represents Board token on board
+ * @readonly
+ * @enum {number}
+ */
+const BoardToken = {
+    NONE: 0,
+    YELLOW: 1,
+    RED: 2,
+};
 
 /**
  * Position on game board
@@ -43,7 +97,7 @@ import {
  * @property {Uint8Array} [board]
  */
 
-export default class Game {
+class Game {
     /**
      * The player who starts first
      * @type {PlayerColor}
@@ -318,8 +372,6 @@ export default class Game {
                 // re-evaluate the latest board, returning the same game status
                 // and board details.
                 return this.evaluateGame(this.currentBoard);
-            default:
-                break;
         }
 
         let moveResult = this.performMove(columnIndex);
@@ -434,3 +486,5 @@ export default class Game {
         };
     }
 }
+
+export { BoardDimensions, BoardToken, Game, GameStatus, MoveStatus, PlayerColor };

@@ -1,4 +1,4 @@
+import Game from './game.js';
 export * from "./constants.js"
-export { default } from "./game.js";
-
+export { Game };
 
