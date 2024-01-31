@@ -36,8 +36,8 @@ No build step required. Add [four-in-a-row.js](dist/four-in-a-row.js) or [four-i
 import { Game } from "four-in-a-row";
 
 const game = new Game();
-const startingMoveResult = game.playMove(0); // Yellow Token placed at row: 0, column: 0
-const nextMoveResult = game.playMove(1); // Red Token placed at row: 0, column 1;
+const startingMoveResult = game.playMove(0); // Yellow Token placed at row: 0, column: 0.
+const nextMoveResult = game.playMove(1); // Red Token placed at row: 0, column 1.
 ```
 
 ### Full Example
@@ -131,6 +131,7 @@ console.log(game.currentBoard);
 ```
 
 #### `BoardDimensions`
+
 ```js
 import { BoardDimensions } from 'four-in-a-row';
 

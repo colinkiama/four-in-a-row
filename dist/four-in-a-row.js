@@ -414,7 +414,7 @@ class Game {
      * Try to perform move on a game board
      * @private
      * @param {number} columnIndex
-     * @param  [{Uint8Array[]} nextBoard
+     * @param  {Uint8Array[]} nextBoard
      * @return {MoveAttemptResult} result
      */
     tryPerformMove(columnIndex, nextBoard) {
