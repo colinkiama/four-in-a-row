@@ -84,17 +84,17 @@ const BoardToken = {
 /**
  * Result from attempting to perform a move
  * @typedef {Object} MoveResult
- * @property {Uint8Array} nextBoard
+ * @property {Uint8Array[]} nextBoard
  * @property {PlayerColor} winner
  * @property {MoveStatus} status
- * @property {Uint8Array} winLine
+ * @property {BoardPosition[]} winLine
  */
 
 /**
  * Result from checking if move can be performed on a board
  * @typedef {Object} MoveAttemptResult
  * @property {MoveStatus} status
- * @property {Uint8Array} [board]
+ * @property {Uint8Array[]} [board]
  */
 
 class Game {
@@ -114,7 +114,7 @@ class Game {
      * @type {GameStatus}
      */
     status;
-    
+
     /** The value of the game board
      * @type {Uint8Array[]}
      */
@@ -143,8 +143,8 @@ class Game {
     /**
      * Creates a deep copy of a game board from another game board
      * @private
-     * @param {Uint8Array} oldBoard
-     * @return {Uint8Array} newBoard
+     * @param {Uint8Array[]} oldBoard
+     * @return {Uint8Array[]} newBoard
      */
     static deepBoardCopy(oldBoard) {
         let newBoard = new Array(BoardDimensions.ROWS);
@@ -329,7 +329,7 @@ class Game {
     /**
      * Check if a game board is full
      * @private
-     * @param {Uint8Array} board
+     * @param {Uint8Array[]} board
      * @return {boolean} result
      */
     static checkForFilledBoard(board) {
@@ -414,7 +414,7 @@ class Game {
      * Try to perform move on a game board
      * @private
      * @param {number} columnIndex
-     * @param  {Uint8Array} nextBoard
+     * @param  [{Uint8Array[]} nextBoard
      * @return {MoveAttemptResult} result
      */
     tryPerformMove(columnIndex, nextBoard) {
@@ -447,7 +447,7 @@ class Game {
 
     /** Evaluate next state of the game from last move performed on a game board
      * @private
-     * @param {Uint8Array} board
+     * @param {Uint8Array[]} board
      * @return {MoveResult} result
      */
     evaluateGame(board) {
