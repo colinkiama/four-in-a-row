@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "Four-In-A Row game logic library. No need to write the logic for the game yourself",
   "type": "module",
-  "main": "./src/index.js",
+  "exports": "./src/index.js",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
-    "test": "http-server -o /tests/manual",
+    "start": "http-server -c-1 -o /demo",
     "prod": "rollup --config rollup.config.js --configPlugin @rollup/plugin-terser"
   },
   "repository": {
@@ -33,7 +36,8 @@
     "yellow",
     "red",
     "token",
-    "tokens"
+    "tokens",
+    "lib"
   ],
   "author": "Colin Kiama <colinkiama@gmail.com> (https://colinkiama.com)",
   "bugs": {
