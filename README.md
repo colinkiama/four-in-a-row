@@ -163,7 +163,9 @@ console.log(game.currentBoard);
 // ]
 ```
 
-### `playMove(columnIndex: number)` instance method
+### Instance methods
+
+#### `playMove(columnIndex: number)`
 
 Returns a `MoveResult` object
 
@@ -193,7 +195,7 @@ Returns a `MoveResult` object
 }
 ```
 
-### `reset()`
+#### `reset()`
 
 Restarts the game.
 
