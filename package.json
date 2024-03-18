@@ -1,6 +1,6 @@
 {
   "name": "four-in-a-row",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Four-In-A Row game logic library. No need to write the logic for the game yourself",
   "type": "module",
   "exports": "./src/index.js",

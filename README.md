@@ -42,7 +42,7 @@ const nextMoveResult = game.playMove(1); // Red Token placed at row: 0, column 1
 
 ### Full Example
 
-For a full example of how to use the library, check out out the [manual test in ths repository](tests/manual) which is a four-in-a-row [HTML5 Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) game.
+For a full example of how to use the library, check out out the [demo example](demo) which is a four-in-a-row [HTML5 Canvas](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) game.
 
 ## Public API
 
